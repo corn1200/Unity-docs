@@ -250,3 +250,11 @@ MonoBehaviour 클래스를 상속받았기 때문에, 스크립트는 해당 게
 둘 다 '컴포넌트가 활성화 될 때' 불린다는 공통점이 있어 묶이게 되지만 Start는 한 번, OnEnable은 활성화 될 때 마다 불리게 된다는 차이점이 있다.   
 때문에 초기화 작업에 OnEnable을 활용하면 안된다.    
 OnEnable은 주로 오브젝트 풀링에 사용하게 되는 함수라고 볼 수 있다.
+
+# 3.2. Update vs FixedUpdate vs LateUpdate
+* Update: 프레임 단위로 호출됨
+* LateUpdate: Update 호출 뒤 호출됨
+* FixedUpdate: 고정 단위로 호출됨
+
+FixedUpdate의 '고정 단위'는 물리 엔진에 의해 결정 되어 컴퓨터 성능에 따라 프레임이 다르게 나와 호출 간격이 일정하지 않은 Update와는 달리 일정하게 불리게 된다.   
+이런 이유로 인해서 Rigidbody를 조작할 때는 FixedUpdate를 사용하게 된다.
