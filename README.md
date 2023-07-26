@@ -372,3 +372,99 @@ Mark and Sweep 인것은 같으나 세대 구분이 없고 메모리 정렬도 �
 
 ### 상호 참조 해결법
 만일 두 객체가 서로 참조중이라 하더라도 외부에서 참조가 없어 Mark 되지 않는다면 Sweep 단계에서 해체된다.
+
+# 9. delegate & event
+### delegate
+C# 에서 델리게이트는 함수를 타입화 한 것이다.    
+파라미터와 리턴 타입을 통해 정의하게 되며 이후 리턴, 파라미터 타입이 같은 메서드들과 호환되어 이 메서드들에 대한 참조를 가질 수 있게 된다.
+
+```c#
+public delegate void VoidAndIntEx(int i);
+
+public class ExampleClass
+{
+    public void DoSomething(VoidAndIntEx exFunc)
+    {
+        // 인자로 받은 함수를 호출한다
+        exFunc(1);
+    }
+}
+```
+
+C#에서 이런 델리게이트를 활용해 메서드를 담아두는 역할을 하거나 함수 인자로 넘겨 콜백 패턴을 구현하는 등 다양한 곳에 사용하게 된다.
+
+### event
+이벤트는 결과적으로 델리게이트와 비슷한 일을 하게 되지만 한 가지 큰 차이점은 이벤트를 호출 할 수 있는건 해당 이벤트를 가진 클래스만 가능하다는 것이다.
+
+```c#
+class ExampleClass
+{
+    public event Action ExampleEvent;
+
+    // ...
+    if(ExampleEvent != null)
+    {
+        ExampleEvent();
+    }
+}
+```
+
+### Action, Func, Predicate
+이 키워드들은 자주 사용하게 되는 델리게이트를 템플릿화 한 것들이다.
+
+* Action
+    * 함수 파라미터가 T 이고 반환값이 void 인 경우
+* Func<T, TResult>
+    * 함수 파라미터가 T 이고 반환값이 TResult 인 경우
+* Predicate
+    * 함수 파라미터가 T 이고 반환값이 bool 인 경우
+
+### null 조건부 연산
+델리게이트나 이벤트를 다루다 보면 null인지 체크를 해줘야 한다.  
+만일 null인 델리게이트를 호출한다면 NullReferenceException이 발생하게 된다.
+
+```c#
+if(ExampleEvent != null) {
+    ExampleEvent();
+}
+```
+
+위 코드에서 문제점은 2가지 있다.
+
+* 멀티스레드에서 호출할 경우의 문제
+* 코드가 길어짐
+
+멀티스레드에서 문제는 복잡하게 된다.    
+
+```c#
+if(ExampleEvent != null) // 여기선 문제가 생기지 않으나
+{
+    // 여기서 다른 스레드가 구독을 취소해서 null이 된다
+    ExampleEvent(); // NullReferenceException
+}
+```
+
+이런 복잡한 문제는 검출이 어렵기에 아래 '복사 후 실행' 이란 방법을 통해서 예방할 수 있다.
+
+```c#
+var CopiedEvent = ExampleEvent;
+
+if(CopiedEvent != null)
+{
+    // 여기서 ExampleEvent 구독 취소 해도 문제 생기지 않음
+    CopiedEvent();
+}
+```
+
+다만 이 경우 위에 언급한 '코드가 길어진다'는 문제는 해결하지 못한다.    
+매번 복사하는 것도 좋은 방안은 아니다.
+
+때문에 ?. 연산자를 활용한다.    
+?. 연산자는 ? 왼쪽의 항이 null이 아니라면 . 뒷부분을 실행하겠다는 의미의 연산자이다.
+
+```c#
+ExampleEvent?.Invoke();
+```
+
+함수의 경우 Invoke 를 붙여서 호출할 수 있게 된다.   
+그리고 이 연산자의 경우 원자적으로 수행이 되는 연산자라서 이 연산 도중 다른 스레드가 개입할 여지가 없어 멀티 스레드 환경에서도 안전하게 작동하게 된다.
