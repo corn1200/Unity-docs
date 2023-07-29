@@ -22,6 +22,7 @@
     * [4.6. delegate & event](#46-delegate--event)
     * [4.7. this](#47-this)
     * [4.8. List, Dictionary 등 자료구조의 내부](#48-list-dictionary-등-자료구조의-내부)
+    * [4.9. C# vs C++](#49-c-vs-c)
 
 # 1. 개요
 유니티 엔진은 게임 개발과 시뮬레이션을 위한 종합적인 크로스 플랫폼 게임 엔진이다.   
