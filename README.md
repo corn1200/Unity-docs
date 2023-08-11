@@ -773,6 +773,34 @@ Rigidbody의 주요 속성과 기능은 다음과 같다:
 유니티에서 Rigidbody 컴포넌트는 주로 3D 물리 시뮬레이션에서 사용되며, 2D 게임에서는 'Rigidbody2D' 컴포넌트가 사용된다.  
 Rigidbody를 사용하려면 게임 오브젝트에 해당 컴포넌트를 추가하고, 필요한 속성 및 메서드를 활용하여 물리적 동작을 구현하면 된다.
 
+# 10.1. AddForce
+유니티에서의 'AddForce'는 Rigidbody 컴포넌트를 가진 게임 오브젝트에 힘(Force)을 추가하여 물체를 움직이거나 회전시키는 메서드이다.   
+이 메서드는 물리 시뮬레이션을 사용하여 게임 오브젝트에 힘을 적용할 때 주로 사용된다.
+
+'AddForce' 메서드는 게임 오브젝트에 힘을 방향과 크기를 지정하여 추가한다.   
+이를 통해 게임 오브젝트를 움직이게 하거나 회전시키는 데 사용할 수 있다.     
+주로 Rigidbody 컴포넌트를 가진 물체들을 물리 시뮬레이션에 따라 움직이거나 튀어오르게 만들 때 사용된다.
+
+예를 들어, Rigidbody를 가진 공에 힘을 주어 공을 움직이게 하는 경우:
+```c#
+public Rigidbody ballRigidbody;
+public Vector3 forceDirection = Vector3.forward;
+public float forceMagnitude = 10.0f;
+
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        ballRigidbody.AddForce(forceDirection * forceMagitude)
+    }
+}
+```
+
+위의 예제에서 'AddForce' 메서드를 사용하여 'ballRigidbody'에 'forceDirection' 방향으로 'forceMagnitude' 크기의 힘을 추가하고 있다.      
+이로 인해 공은 해당 방향으로 움직이게 된다.
+
+'AddForce' 메서드는 게임 오브젝트에 물리적인 힘을 적용할 때 유용하며, 주로 게임에서 물리 시뮬레이션을 활용하여 물체의 움직임을 제어하거나 상호작용을 구현할 때 사용된다.
+
 # 11. 콜라이더
 유니티에서의 "Collider"는 게임 오브젝트가 다른 오브젝트와 상호작용하고 충돌을 감지할 수 있도록 도와주는 컴포넌트이다.   
 콜라이더는 주로 물리 시뮬레이션과 충돌 감지에 사용되며, 게임 환경에서 오브젝트 간의 상호작용을 모델링하는 데 중요한 역할을 한다.
