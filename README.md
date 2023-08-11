@@ -978,3 +978,89 @@ Cinemachine의 주요 특징은 다음과 같다:
 
 Cinemachine은 별도의 패키지로 제공되며, 유니티 에셋 스토어에서 다운로드하여 사용할 수 있다.     
 이를 통해 게임의 시네마틱한 효과와 전문적인 카메라 워크플로우를 더욱 간단하게 구현할 수 있다.
+
+# 16. 코루틴 & 인보크
+### 코루틴
+유니티의 코루틴(Coroutine)은 비동기적인 동작을 구현하기 위해 사용되는 기능으로, 특히 게임에서 시간 지연, 반복적인 작업, 병렬 실행 등을 다루는 데 유용하다.      
+코루틴을 사용하면 메인 스레드를 차단하지 않고도 여러 동작을 조절하거나 제어할 수 있다.
+
+코루틴을 사용하여 함수를 만들면 해당 함수 내에서 'yield return' 문을 사용하여 특정 시간을 대기하거나 다른 동작을 수행하다가 다시 원래 함수로 돌아올 수 있다.    
+코루틴 함수는 메인 스레드에서 실행되며, 메인 스레드의 프레임이 진행되는 동안 작업을 처리하면서도 게임의 프레임 속도에 영향을 주지 않는다.
+
+아래는 코루틴의 간단한 예시이다:
+```c#
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        StartCoroutine(MyCoroutine());
+    }
+
+    private IEnumerator MyCoroutine()
+    {
+        Debug.Log("Coroutine started");
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("Coroutine resumed after 2 seconds");
+    }
+}
+```
+
+위의 에시에서 'MyCoroutine'은 코루틴 함수다.    
+'StartCoroutine' 함수를 사용하여 코루틴을 시작하고, 'yield return new WaitForSeconds(2.0f);' 라인에서 2초 동안 대기하도록 지정하고 있다.    
+이러한 식으로 코루틴을 사용하면 원하는 지연이나 작업을 비동기적으로 처리할 수 있다.
+
+코루틴은 게임 내에서 타이밍 제어, 애니메이션, 네트워킹 등 다양한 상황에서 유용하게 사용된다.    
+하지만 코루틴의 사용은 복잡한 동기화 문제를 유발할 수 있으므로, 적절한 활용과 조심스런 사용이 필요하다.
+
+### 인보크
+유니티의 'Invoke'는 주어진 시간 이후에 특정 메서드를 실행하도록 예약하는 함수다.    
+이를 사용하여 게임 오브젝트의 특정 동작이나 함수 호출을 지연시키거나 반복적으로 실행할 수 있다.     
+일정한 시간이 지난 후에 원하는 동작을 수행하거나 주기적으로 특정 함수를 호출하는 데 유용하게 사용된다.
+
+'Invoke' 함수의 사용 방법은 다음과 같다:
+```c#
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        // 2초 후에 MyMethod를 호출
+        Invoke("MyMethod", 2.0f);
+    }
+
+    private void MyMethod()
+    {
+        Debug.Log("MyMethod has been called.");
+    }
+}
+```
+
+위의 예제에서는 'Start' 메서드에서 'Invoke' 함수를 사용하여 2초 후에 'MyMethod' 메서드를 호출하도록 예약했다.   
+지정한 시간이 경과하면 해당 메서드가 실행되어 "MyMethod has been called."라는 로그가 출력된다.
+
+또한 'Invoke'를 사용하여 반복적으로 함수를 호출하는 것도 가능하다.      
+예를 들어, 아래의 코드는 1초마다 'MyMethod'를 호출한다:
+```c#
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        // 1초 후부터 1초 간격으로 MyMethod를 호출
+        InvokeRepeating("MyMethod", 1.0f, 1.0f);
+    }
+
+    private void MyMethod()
+    {
+        Debug.Log("MyMethod has been called.");
+    }
+}
+```
+
+'InvokeRepeating' 함수를 사용하여 처음에 지정한 시간만큼 대기하고, 그 후에 주기적으로 함수를 호출하도록 예약한다.
+
+'Invoke'와 'InvokeRepeating'은 유니티에서 간단한 시간 기반의 동작을 구현하는 데 유용하며, 예를 들어 애니메이션, 게임 로직, 상호작용 등 다양한 시나리오에서 활용할 수 있다.
