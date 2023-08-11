@@ -939,3 +939,21 @@ HDRP는 다음과 같은 주요 특징을 가지고 있다:
 HDRP는 고품질의 시각적 효과와 현실적인 조명, 그림자, 재질 등을 필요로 하는 프로젝트 적합하다.   
 주로 PC 게임이나 콘솔 게임에서 활용되며, 더 높은 그래픽 품질과 시각적 리얼리즘을 추구하는 프로젝트에 유용한 렌더링 파이프라인이다.
 
+# 14.3. SRP
+유니티의 SRP(Scriptable Render Pipeline)는 사용자 정의 가능한 렌더링 파이프라인을 구축하고 조정할 수 있는 프레임워크이다.     
+SRP를 사용하면 유니티의 기본적인 렌더링 파이프라인을 사용자 정의 요구에 맞게 수정하거나 완전히 새로운 렌더링 파이프라인을 만들 수 있다.     
+SRP는 Universal Render Pipeline(URP)와 High Definition Render Pipeline(HDRP)를 생성하고 구성하기 위한 기술적인 기반을 제공한다.
+
+SRP를 사용하면 다음과 같은 주요 기능을 활용할 수 있다:
+
+1. Render Pass Customization: 사용자는 렌더링 프로세스의 다양한 단계에 대한 커스텀 렌더 패스를 정의하고 추가할 수 있다.     
+이를 통해 렌더링 파이프라인의 동작을 조절하거나 추가적인 기능을 구현할 수 있다.
+2. Shader Customization: SRP를 통해 사용자 정의 쉐이더를 작성하거나 기존 쉐이더를 수정할 수 있다.   
+이로써 특정한 시각적 효과나 마테리얼 동작을 원하는 대로 구현할 수 있다.
+3. Culling Customization: 뷰 프러스텀 컬링(View Frustum Culling)과 같은 컬링 방법을 사용자의 요구에 따라 변경하거나 최적화할 수 있다.
+4. Lighting and Shadow Customization: 조명과 그림자 처리를 개별적으로 조절하거나 사용자 정의할 수 있다.     
+이를 통해 특정한 조명 모델이나 그림자 기술을 구현할 수 있다.
+5. Post-processing Effects: 후처리 효과를 사용자가 원하는 방식으로 추가하거나 조정할 수 있다.
+
+SRP는 주로 고급 사용자나 그래픽 엔진 개발자를 위해 고안되었다.      
+기존의 Universal Render Pipeline(URP)와 High Definition Render Pipeline(HDRP)는 SRP의 구현 사례로 볼 수 있으며, 이를 통해 게임 개발자는 더 높은 수준의 커스터마이징과 시각적 품질을 달성할 수 있다.
