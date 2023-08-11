@@ -791,7 +791,7 @@ void Update()
 {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-        ballRigidbody.AddForce(forceDirection * forceMagitude)
+        ballRigidbody.AddForce(forceDirection * forceMagitude);
     }
 }
 ```
@@ -800,6 +800,34 @@ void Update()
 이로 인해 공은 해당 방향으로 움직이게 된다.
 
 'AddForce' 메서드는 게임 오브젝트에 물리적인 힘을 적용할 때 유용하며, 주로 게임에서 물리 시뮬레이션을 활용하여 물체의 움직임을 제어하거나 상호작용을 구현할 때 사용된다.
+
+# 10.2. AddTorque
+유니티에서의 'AddTorque'는 Rigidbody 컴포넌트를 가진 게임 오브젝트에 회전 토크(Torque)를 추가하여 물체를 회전시키는 메서드이다.     
+이 메서드는 물리 시뮬레이션을 활용하여 게임 오브젝트를 회전시키는 데 사용된다.
+
+'AddTorque' 메서드는 회전 토크의 크기와 방향을 지정하여 게임 오브젝트에 회전 효과를 추가한다.   
+이를 통해 Rigidbody를 가진 물체의 회전 동작을 제어할 수 있다.   
+주로 고체 물리학에서 물체의 회전을 모델링하거나 물체를 특정한 각속도로 회전시키는 데 사용된다.
+
+예를 들어, Rigidbody를 가진 톱날 모양의 오브젝트에 회전 토크를 추가하여 회전시키는 경우:
+```c#
+public Rigidbody bladeRigidbody;
+public Vector3 torqueDirection = Vector3.up;
+public float torqueMagnitude = 5.0f;
+
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        bladeRigidbody.AddTorque(torqueDirection * torqueMagnitude);
+    }
+}
+```
+
+위의 예제에서 'AddTorque' 메서드를 사용하여 'bladeRigidbody'에 'torqueDirection' 방향으로 'torqueMagnitude' 크기의 회전 토크를 추가하고 있다.   
+이로 인해 톱날 모양의 오브젝트가 해당 방향으로 회전하게 된다.
+
+'AddTorque' 메서드는 게임 오브젝트에 회전 효과를 추가할 때 사용되며, 주로 물리 시뮬레이션을 통해 오브젝트의 회전 동작을 제어하고 다양한 회전 동작을 구현할 때 활용된다.
 
 # 11. 콜라이더
 유니티에서의 "Collider"는 게임 오브젝트가 다른 오브젝트와 상호작용하고 충돌을 감지할 수 있도록 도와주는 컴포넌트이다.   
